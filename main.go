@@ -1,34 +1,17 @@
 package main
 
-import (
-	"flag"
-	"log"
-	"os"
-	"os/signal"
-	"sync"
-	"syscall"
+import "os"
 
-	"github.com/dicedb/dice/config"
-	"github.com/dicedb/dice/server"
-)
+func SaveData1(path string, data []byte) error {
+	fp, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0664)
+	if err != nil {
+		return err
+	}
+	defer fp.Close()
 
-func setupFlags() {
-	flag.StringVar(&config.Host, "host", "0.0.0.0", "host for the dice server")
-	flag.IntVar(&config.Port, "port", 7379, "port for the dice server")
-	flag.Parse()
-}
-
-func main() {
-	setupFlags()
-	log.Println("rolling the dice \u2684\uFE0E")
-
-	var sigs chan os.Signal = make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGTERM, syscall.SIGINT)
-	var wg sync.WaitGroup
-	wg.Add(2)
-
-	go server.RunAsyncTCPServer(&wg)
-	go server.WaitForSignal(&wg, sigs)
-
-	wg.Wait()
+	_, err = fp.Write(data)
+	if err != nil {
+		return err
+	}
+	return fp.Sync() // fsync
 }
