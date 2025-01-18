@@ -15,7 +15,7 @@ func SaveData1(path string, data []byte) error {
 	// - os.O_CREATE: Create the file if it doesn't exist
 	// - os.O_TRUNC: Truncate (clear) the file's contents if it already exists
 	// Permissions: 0664 (read/write for owner, read for group/others)
-	fp, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0664)
+	fp, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC|os.O_APPEND, 0664)
 	if err != nil {
 		// Return an error if the file couldn't be opened or created
 		return err
@@ -37,10 +37,10 @@ func main() {
 	// Example usage of SaveData1 function
 
 	// Define the file path where data will be saved
-	filePath := "example.txt"
+	filePath := "test.txt"
 
 	// Define the data to be written to the file
-	data := []byte("Hello, World!") // Convert a string to a byte slice
+	data := []byte("Hello, this is a test write from os directly!") // Convert a string to a byte slice
 
 	// Call SaveData1 to save the data to the file
 	err := SaveData1(filePath, data)
