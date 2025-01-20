@@ -37,12 +37,34 @@ func SaveData2(path string, data []byte) error {
 	return os.Rename(tmp, path)
 }
 
+func SaveData3(path string, data []byte) error {
+	tmp := fmt.Sprintf("%s.tmp.%d", path, rand.Int())
+	fp, err := os.OpenFile(tmp, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0664)
+	if err != nil {
+		return err
+	}
+	defer fp.Close()
+	_, err = fp.Write(data)
+	if err != nil {
+		/// Remove the tmp file if the operation failed
+		os.Remove(tmp)
+		return err
+	}
+	err = fp.Sync()
+	if err != nil {
+		/// Remove the tmp file if the operation failed
+		os.Remove(tmp)
+		return err
+	}
+	return os.Rename(tmp, path)
+}
+
 func main() {
 	// Example usage of SaveData2
 	path := "example.txt"
 	data := []byte("This is some example data.")
 
-	err := SaveData2(path, data)
+	err := SaveData3(path, data)
 	if err != nil {
 		fmt.Printf("Error saving data: %v\n", err)
 		return
