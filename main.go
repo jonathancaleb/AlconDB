@@ -79,6 +79,7 @@ func SaveDataImproved(ctx context.Context, path string, data []byte) error {
 	tmp := filepath.Join(dir, fmt.Sprintf(".%s.tmp.%d", filepath.Base(path), randomInt()))
 	log.Printf("Writing data to temporary file: %s", tmp)
 
+	// Open the temporary file
 	fp, err := os.OpenFile(tmp, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0664)
 	if err != nil {
 		if errors.Is(err, os.ErrPermission) {
@@ -86,22 +87,28 @@ func SaveDataImproved(ctx context.Context, path string, data []byte) error {
 		}
 		return err
 	}
-	defer fp.Close()
-	defer os.Remove(tmp)
 
-	select {
-	case <-ctx.Done():
-		return ctx.Err() // Return if context is canceled
-	default:
-	}
-
+	// Write data to the temporary file
 	if _, err := io.WriteString(fp, string(data)); err != nil {
-		return err
-	}
-	if err := fp.Sync(); err != nil {
+		fp.Close()     // Close the file explicitly
+		os.Remove(tmp) // Clean up the temporary file
 		return err
 	}
 
+	// Flush data to disk
+	if err := fp.Sync(); err != nil {
+		fp.Close()     // Close the file explicitly
+		os.Remove(tmp) // Clean up the temporary file
+		return err
+	}
+
+	// Close the file explicitly before renaming
+	if err := fp.Close(); err != nil {
+		os.Remove(tmp) // Clean up the temporary file
+		return err
+	}
+
+	// Rename the temporary file to the target file
 	log.Printf("Renaming temporary file to: %s", path)
 	return os.Rename(tmp, path)
 }
