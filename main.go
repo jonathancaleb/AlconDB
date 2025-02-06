@@ -1,7 +1,7 @@
 package main
 
 import (
-	"alconDB/config/database"
+	"alconDB/database"
 	"context"
 	"encoding/binary"
 	"errors"
