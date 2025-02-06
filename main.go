@@ -1,6 +1,7 @@
 package main
 
 import (
+	"alconDB/config/database"
 	"context"
 	"encoding/binary"
 	"errors"
@@ -11,6 +12,10 @@ import (
 	"os"
 	"path/filepath"
 )
+
+func main() {
+	database.StartDB()
+}
 
 // SaveData1 writes data directly to the file at the given path.
 func SaveData1(path string, data []byte) error {
@@ -24,7 +29,7 @@ func SaveData1(path string, data []byte) error {
 	if err != nil {
 		return err
 	}
-	return fp.Sync() // fsync
+	return fp.Sync()
 }
 
 // SaveData2 performs an atomic write operation to ensure data integrity.
@@ -113,15 +118,15 @@ func SaveDataImproved(ctx context.Context, path string, data []byte) error {
 	return os.Rename(tmp, path)
 }
 
-func main() {
-	path := "example.txt"
-	data := []byte("This is some example data.")
+// func main() {
+// 	path := "example.txt"
+// 	data := []byte("This is some example data.")
 
-	err := SaveDataImproved(context.Background(), path, data)
-	if err != nil {
-		log.Printf("Error saving data: %v\n", err)
-		return
-	}
+// 	err := SaveDataImproved(context.Background(), path, data)
+// 	if err != nil {
+// 		log.Printf("Error saving data: %v\n", err)
+// 		return
+// 	}
 
-	log.Println("Data saved atomically!")
-}
+// 	log.Println("Data saved atomically!")
+// }
