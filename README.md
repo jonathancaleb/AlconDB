@@ -1,44 +1,53 @@
 # AlconDB
 
-AlconBase is a hybrid database system designed to combine the best features of relational (SQL) and NoSQL (document) databases, all while leveraging the power of PostgreSQL as its underlying storage engine
+AlconBase is a hybrid database system engineered to combine the best features of both relational (SQL) and NoSQL (document) databases—all while leveraging PostgreSQL as its underlying storage engine.
 
-Versioned Key-Value Store (Time-Travel)
-Allow users to retrieve the historical state of a key.
+## Features
 
-Problem Solved: Debugging and audits become easier for developers.
-Unique Differentiator: Introduce time-travel queries for keys.
-Schema-Aware Keys
-Allow developers to define schemas for their values to validate data.
+### Versioned Key-Value Store (Time-Travel)
 
-Problem Solved: Prevents invalid data storage, reducing errors in production.
-Unique Differentiator: Combine schema validation with a key-value paradigm.
-Geographic-Aware Partitioning
-Store data closer to where it’s accessed most.
+- **Description:** Retrieve the historical state of a key.
+- **Problem Solved:** Makes debugging and audits easier.
+- **Unique Differentiator:** Introduces time-travel queries for keys.
 
-Problem Solved: Reduces latency for geographically distributed systems.
-Unique Differentiator: Provide built-in support for geospatial awareness.
-Lightweight Indexing
-Introduce optional secondary indexes for specific patterns of queries.
+### Schema-Aware Keys
 
-Problem Solved: Allows for simple range scans or filtered lookups without full database overhead.
-Unique Differentiator: Minimal overhead compared to traditional index-heavy databases.
-Event Streaming Support
-Emit events whenever a key changes or is accessed.
+- **Description:** Define schemas for your values to ensure data validity.
+- **Problem Solved:** Prevents invalid data storage, reducing production errors.
+- **Unique Differentiator:** Combines schema validation with a key-value paradigm.
 
-Problem Solved: Useful for building reactive systems and debugging real-time flows.
-Unique Differentiator: Built-in event-driven architecture.
-Built-in Compression
-Provide seamless compression for data storage to save space.
+### Geographic-Aware Partitioning
 
-Problem Solved: Reduces storage costs for large data sets.
-Unique Differentiator: Lightweight, configurable compression per key or value.
-Offline-First Support
-Provide a seamless experience for disconnected or weakly connected environments.
+- **Description:** Store data closer to its primary access location.
+- **Problem Solved:** Reduces latency for geographically distributed systems.
+- **Unique Differentiator:** Provides built-in support for geospatial awareness.
 
-Problem Solved: Useful for developers targeting users in areas with poor connectivity (e.g., Uganda).
-Unique Differentiator: Sync capabilities when reconnected.
-Customizable Expiry Policies
-Allow granular control over key expiration policies.
+### Lightweight Indexing
 
-Problem Solved: Tailor the database to fit specific caching or session needs.
-Unique Differentiator: Complex policies like TTL with conditions (e.g., expire if unused for X hours).
+- **Description:** Introduce optional secondary indexes for specific query patterns.
+- **Problem Solved:** Enables simple range scans or filtered lookups without heavy overhead.
+- **Unique Differentiator:** Minimal overhead compared to traditional index-heavy databases.
+
+### Event Streaming Support
+
+- **Description:** Emit events whenever a key is changed or accessed.
+- **Problem Solved:** Facilitates the development of reactive systems and debugging of real-time flows.
+- **Unique Differentiator:** Features a built-in event-driven architecture.
+
+### Built-in Compression
+
+- **Description:** Seamless compression for data storage to conserve space.
+- **Problem Solved:** Helps reduce storage costs for large datasets.
+- **Unique Differentiator:** Offers lightweight, configurable compression on a per-key or per-value basis.
+
+### Offline-First Support
+
+- **Description:** Provides a seamless user experience in disconnected or weakly connected environments.
+- **Problem Solved:** Ideal for applications targeting users in poor connectivity areas.
+- **Unique Differentiator:** Synchronization capabilities when connectivity is restored.
+
+### Customizable Expiry Policies
+
+- **Description:** Allows granular control over key expiration policies.
+- **Problem Solved:** Enables customization for caching or session management needs.
+- **Unique Differentiator:** Supports complex policies like TTL conditions (e.g., expire if unused for X hours)
